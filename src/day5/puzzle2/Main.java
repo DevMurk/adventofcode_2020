@@ -22,18 +22,23 @@ public class Main {
 
                 // Read the line
                 String line = reader.nextLine();
+
+                // Calculate all ids from the boarding passes
                 int row = decodeRow(line.substring(0, 7)), col = decodeCol(line.substring(7, 10));
                 ids.add(row * 8 + col);
 
             }
 
-            ArrayList<Integer> news = new ArrayList<>();
-            for (int id : ids) {
-                if (ids.contains(id + 1) && ids.contains(id - 1)) news.add(id);
-            }
+            // Calculate all ids
+            ArrayList<Integer> all = new ArrayList<>();
+            for (int r = 0; r < 128; r++)
+                for (int c = 0; c < 8; c++)
+                    all.add(r * 8 + c);
 
-            System.out.println(ids.size());
-            System.out.println(news.size());
+            // Filter out all the -1 and +1 ids
+            for (int id : all)
+                if (!all.contains(id - 1) && !all.contains(id + 1))
+                    System.out.println(id);
 
         } catch (FileNotFoundException ignored) {
 
